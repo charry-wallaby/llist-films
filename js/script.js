@@ -1,37 +1,51 @@
+/* Задания на урок:
+
+1) Удалить все рекламные блоки со страницы (правая часть сайта)
+
+2) Изменить жанр фильма, поменять "комедия" на "драма"
+
+3) Изменить задний фон постера с фильмом на изображение "bg.jpg". Оно лежит в папке img.
+Реализовать только при помощи JS
+
+4) Список фильмов на странице сформировать на основании данных из этого JS файла.
+Отсортировать их по алфавиту 
+
+5) Добавить нумерацию выведенных фильмов */
+
 "use strict";
 
-const box = document.getElementById("box"),
-      btns = document.getElementsByTagName("button"),
-      circles = document.getElementsByClassName("circle"),
-      hearts = document.querySelectorAll(".heart"),
-      wrapper = document.querySelector(".wrapper"),
-      oneHeart = document.querySelector(".heart");
+const movieDB = {
+    movies: [
+        "Логан",
+        "Лига справедливости",
+        "Ла-ла лэнд",
+        "Одержимость",
+        "Скотт Пилигрим против..."
+    ]
+};
 
-// box.style.backgroundColor = "blue";
-// box.style.width = "500px";
+const adv       = document.querySelectorAll(".promo__adv img"),
+      poster    = document.querySelector(".promo__bg"),
+      genre     = poster.querySelector(".promo__genre"),
+      movieList = document.querySelector(".promo__interactive-list"),
+      movie     = movieList.querySelectorAll(".promo__interactive-item");
 
-box.style.cssText = `background-color: blue; width: 500px`;
+adv.forEach(item => {
+ item.remove();
+}); // удаляем рекламу в правом блоке
 
-btns[1].style.borderRadius = "100%";
-circles[0].style.backgroundColor = "red";
+genre.textContent = "драма"; // меняем жанр фильма на главном экране
+poster.style.cssText = `background-image: url(img/bg.jpg)`; // меняем фон у постера
 
-hearts.forEach(item => {
- item.style.backgroundColor = "blue";
+movieList.innerHTML = ""; // очищаем список фильмов
+movieDB.movies.sort(); // сортируем массив фильмов по алфавиту
+
+movieDB.movies.forEach((film, i) => {
+ movieList.innerHTML += `
+   <li class="promo__interactive-item"> 
+    ${i+1}
+    ${film}
+    <div class="delete"></div> 
+   </li>
+ `;
 });
-
-const div = document.createElement("div");
-// const text = document.createTextNode("Тут был я");
-
-div.classList.add("black");
-
-// wrapper.append(div);   //добавление элемента вконец блока
-// wrapper.prepend(div);  //добавление элемента вначало блока
-// hearts[0].before(div); //добавление элемента до другого элемента
-// hearts[0].after(div);  //добавление элемента после другого элемента
-
-// circles[0].remove();  //удаление элемента 
-
-// hearts[0].replaceWith(circles[0]);  //перемещение элемента в другой блок
-
-div.innerHTML = "<h1>Hello World</h1>"; //вставка html-кода
-// div.textContent = "Hello World"; //добавление текста
